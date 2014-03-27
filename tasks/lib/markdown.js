@@ -16,12 +16,13 @@ var _ = require('lodash');
 exports.init = function(grunt) {
   var exports = {};
 
-  exports.markdown = function(src, options, template) {
+  exports.markdown = function(fp, options, template) {
 
     var html = null;
     var templateContext = null;
     var codeLines = options.codeLines;
     var shouldWrap = codeLines && codeLines.before && codeLines.after;
+    var src = grunt.file.read(fp);
 
     function wrapLines(code) {
       var out = [];
@@ -71,7 +72,9 @@ exports.init = function(grunt) {
     } else {
       templateContext = options.templateContext;
     }
-
+    
+    templateContext.filepath = fp;
+    
     src = options.preCompile(src, templateContext) || src;
     html = markdown(src);
     html = options.postCompile(html, templateContext) || html;
