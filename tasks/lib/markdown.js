@@ -73,7 +73,7 @@ exports.init = function(grunt) {
       templateContext = options.templateContext;
     }
     
-    templateContext.filepath = fp;
+    templateContext.filepath = fp[0] || fp;
     
     src = options.preCompile(src, templateContext) || src;
     html = markdown(src);
